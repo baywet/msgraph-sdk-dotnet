@@ -39,3 +39,9 @@ jobs:
       - run: rm ${{ steps.generatePatch.outputs.patchFilePath }}
         continue-on-error: true
         if: ${{ steps.generatePatch.outputs.patchFilePath != '' }}
+      - name: Upload patch file as artifact
+        uses: actions/upload-artifact@v4
+        continue-on-error: true
+        with:
+          name: patch
+          path: '*.patch'
