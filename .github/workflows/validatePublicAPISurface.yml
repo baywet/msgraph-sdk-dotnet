@@ -3,7 +3,6 @@ name: Validate Public API surface changes
 on:
   workflow_dispatch:
   push:
-    branches: [ 'feature/*', 'dev' ,'master' ]
   pull_request:
     branches: [ 'feature/*', 'dev' ,'master' ]
 
