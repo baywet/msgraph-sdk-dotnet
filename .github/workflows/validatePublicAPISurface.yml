@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.7
-      - run: git switch -
+      - run: git switch -c ${{ github.event.pull_request.head.ref }}
         name: Disable detached head so we get a patch
       - run: scripts/generateDomPatch.ps1
         shell: pwsh
