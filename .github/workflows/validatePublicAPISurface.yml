@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.7
       - run: |
-            git fetch $BRANCH_NAME
+            git fetch origin $BRANCH_NAME
             git switch $BRANCH_NAME
         name: Disable detached head so we get a patch
         if: github.event_name == 'pull_request'
