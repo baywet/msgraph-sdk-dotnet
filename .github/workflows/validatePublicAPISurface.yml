@@ -36,10 +36,8 @@ jobs:
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: rm ${{ steps.generatePatch.outputs.patchFilePath }}
-        continue-on-error: true
-        if: ${{ steps.generatePatch.outputs.patchFilePath != '' }}
       - name: Upload patch file as artifact
+        if: always()
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
