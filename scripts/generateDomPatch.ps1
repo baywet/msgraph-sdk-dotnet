@@ -14,14 +14,14 @@ if ($null -ne $relativePath) {
         $result = git format-patch $initialCommitSha..$finalCommitSha --minimal -U0 -w $relativePath
     }
 
-    if ((Test-Path $result) -and (Test-Path Env:GITHUB_ENV)) {
+    if ((Test-Path $result) -and (Test-Path Env:GITHUB_OUTPUT)) {
         write-host "Patch file generated at $result"
-        "isFilePresent=true" | Out-File -FilePath $env:GITHUB_ENV -Append
-        "patchFilePath=$result" | Out-File -FilePath $env:GITHUB_ENV -Append
+        "isFilePresent=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+        "patchFilePath=$result" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
         exit 0
     }
 }
-if (Test-Path Env:GITHUB_ENV) {
+if (Test-Path Env:GITHUB_OUTPUT) {
     write-host "No patch file generated"
-    "isFilePresent=false" | Out-File -FilePath $env:GITHUB_ENV -Append
+    "isFilePresent=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 }
