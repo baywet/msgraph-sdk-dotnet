@@ -1,12 +1,12 @@
 param (
 	[string]
-	$relativePath = "./kiota-dom-export.txt",
+	$fileNameToDiff = "kiota-dom-export.txt",
     [string]
     $initialCommitSha = "",
     [string]
     $finalCommitSha = ""
 )
-$relativePath = Get-ChildItem -Recurse -Filter "kiota-lock.json" | Select-Object -First 1
+$relativePath = Get-ChildItem -Recurse -Filter $fileNameToDiff | Select-Object -First 1
 if ($null -ne $relativePath) {
     if ($initialCommitSha -eq "" -or $finalCommitSha -eq "") {
         $result = git format-patch -1 HEAD --minimal -U0 -w $relativePath
