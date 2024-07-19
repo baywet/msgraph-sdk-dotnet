@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.7
+      - run: git switch -
+        name: Disable detached head so we get a patch
       - run: scripts/generateDomPatch.ps1
         shell: pwsh
         id: generatePatch
