@@ -19,7 +19,7 @@ jobs:
       - run: git switch -c ${{ github.event.pull_request.head.ref }}
         name: Disable detached head so we get a patch
         if: github.event_name == 'pull_request'
-      - run: git switch -c ${GITHUB_REF#refs/heads/}
+      - run: git switch ${GITHUB_REF#refs/heads/}
         name: Disable detached head so we get a patch
         if: github.event_name == 'push'
       - run: scripts/generateDomPatch.ps1
