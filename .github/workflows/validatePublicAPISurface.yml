@@ -31,11 +31,12 @@ jobs:
           path: ${{ steps.generatePatch.outputs.patchFilePath }}
           fail-on-removal: true
         id: diff
-      - run: gh pr comment ${{ github.env.number }} -b ${{ steps.diff.outputs.explanations }}
+      - run: gh pr comment ${{ github.env.number }} -b $EXPLANATIONS
         if: ${{ steps.generatePatch.outputs.patchFilePath != '' && steps.diff.outputs.explanations != '' && github.event_name == 'pull_request' }}
         continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EXPLANATIONS: ${{ steps.diff.outputs.explanations }}
       - name: Upload patch file as artifact
         if: always()
         uses: actions/upload-artifact@v4
