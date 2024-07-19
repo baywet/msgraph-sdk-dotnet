@@ -34,7 +34,7 @@ jobs:
           path: ${{ steps.generatePatch.outputs.patchFilePath }}
           fail-on-removal: true
         id: diff
-      - run: gh pr comment ${{ github.event.pull_request.number }} -b $EXPLANATIONS
+      - run: gh pr comment ${{ github.event.pull_request.number }} -b "$EXPLANATIONS"
         if: ${{ always() && steps.generatePatch.outputs.patchFilePath != '' && steps.diff.outputs.explanations != '' && github.event_name == 'pull_request' }}
         continue-on-error: true
         env:
