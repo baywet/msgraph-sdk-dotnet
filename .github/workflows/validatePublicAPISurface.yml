@@ -23,7 +23,13 @@ jobs:
           path: ${{ steps.generatePatch.outputs.patchFilePath }}
           fail-on-removal: true
         id: diff
-      - run: gh pr comment ${{ github.event.pull_request.number }} -b "$EXPLANATIONS"
+      # TODO move to an action
+      - run: ./scripts/clearOldComments.ps1
+        if: ${{ always() && steps.generatePatch.outputs.patchFilePath != '' && github.event_name == 'pull_request' }}
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: gh pr comment ${{ github.event.pull_request.number }} -b "<!--publicapi-->$EXPLANATIONS"
         if: ${{ always() && steps.generatePatch.outputs.patchFilePath != '' && steps.diff.outputs.explanations != '' && github.event_name == 'pull_request' }}
         continue-on-error: true
         env:
