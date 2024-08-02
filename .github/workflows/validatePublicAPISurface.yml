@@ -25,10 +25,9 @@ jobs:
       - run: git switch ${GITHUB_REF#refs/heads/}
         name: Disable detached head so we get a patch
         if: github.event_name == 'push'
-      - run: scripts/generateDomPatch.ps1
-        shell: pwsh
+      - uses: baywet/kiota-dom-export-diff-tool/export@main
         id: generatePatch
-      - uses: baywet/kiota-dom-export-diff-tool@main
+      - uses: baywet/kiota-dom-export-diff-tool/tool@main
         if: ${{ steps.generatePatch.outputs.patchFilePath != '' }}
         with:
           path: ${{ steps.generatePatch.outputs.patchFilePath }}
