@@ -15,16 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.7
-      - run: |
-            git fetch origin $BRANCH_NAME
-            git switch $BRANCH_NAME
-        name: Disable detached head so we get a patch
-        if: github.event_name == 'pull_request'
-        env:
-          BRANCH_NAME: ${{ github.event.pull_request.head.ref }}
-      - run: git switch ${GITHUB_REF#refs/heads/}
-        name: Disable detached head so we get a patch
-        if: github.event_name == 'push'
       - uses: baywet/kiota-dom-export-diff-tool/export@main
         id: generatePatch
       - uses: baywet/kiota-dom-export-diff-tool/tool@main
