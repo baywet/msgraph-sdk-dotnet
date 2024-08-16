@@ -16,9 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.7
-      - uses: baywet/kiota-dom-export-diff-tool/export@main
+      - uses: microsoftgraph/kiota-dom-export-diff-tool/export@main
         id: generatePatch
-      - uses: baywet/kiota-dom-export-diff-tool/tool@main
+      - uses: microsoftgraph/kiota-dom-export-diff-tool/tool@main
         if: ${{ steps.generatePatch.outputs.patchFilePath != '' }}
         with:
           path: ${{ steps.generatePatch.outputs.patchFilePath }}
