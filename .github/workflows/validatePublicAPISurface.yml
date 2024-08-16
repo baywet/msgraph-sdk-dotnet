@@ -24,20 +24,11 @@ jobs:
           path: ${{ steps.generatePatch.outputs.patchFilePath }}
           fail-on-removal: true
         id: diff
-      # TODO move to an action
-      - run: ./scripts/clearOldComments.ps1
-        if: ${{ always() && steps.generatePatch.outputs.patchFilePath != '' && github.event_name == 'pull_request' }}
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-        shell: pwsh
-      - run: gh pr comment ${{ github.event.pull_request.number }} -b "<!--publicapi-->$EXPLANATIONS"
+      - uses: microsoftgraph/kiota-dom-export-diff-tool/comment@main
         if: ${{ always() && steps.generatePatch.outputs.patchFilePath != '' && steps.diff.outputs.explanations != '' && github.event_name == 'pull_request' }}
         continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EXPLANATIONS: ${{ steps.diff.outputs.explanations }}
+        with:
+          comment: ${{ steps.diff.outputs.explanations }}
       - name: Upload patch file as artifact
         if: always()
         uses: actions/upload-artifact@v4
