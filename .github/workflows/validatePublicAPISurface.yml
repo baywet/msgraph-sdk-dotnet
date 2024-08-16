@@ -29,6 +29,7 @@ jobs:
         continue-on-error: true
         with:
           comment: ${{ steps.diff.outputs.explanations }}
+          prNumber: ${{ github.event.pull_request.number }}
       - name: Upload patch file as artifact
         if: always()
         uses: actions/upload-artifact@v4
